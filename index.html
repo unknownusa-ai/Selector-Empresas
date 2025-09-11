@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector de Empresas - Elegante y Dinámico</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transform: translateY(-20px);
+            animation: floatContainer 3s ease-in-out infinite;
+        }
+
+        .unilibre-logo {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 0 30px rgba(34, 100, 199, 0.5));
+            animation: pulse 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes floatContainer {
+            0%, 100% { transform: translateY(-20px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Patrón de puntos profesional */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a1930 0%, #142947 50%, #1e3a64 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .start-screen::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, #2264c7 0%, transparent 80%);
+            animation: rotateBg 15s linear infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .start-screen::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #4d8bef, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #2264c7, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #4d8bef, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #2264c7, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #4d8bef, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            animation: sparkle 5s linear infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes sparkle {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        .start-content {
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #2264c7, #0f4c9c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(34, 100, 199, 0.3);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: scaleIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.8s,
+                       logoFloat 3s ease-in-out infinite 1.6s;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .start-logo i {
+            font-size: 3rem;
+            color: white;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+        }
+
+        .start-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .start-subtitle {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #2264c7, #0f4c9c);
+            border: none;
+            color: white;
+            padding: 20px 45px;
+            border-radius: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 30px rgba(34, 100, 199, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards 1.7s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(34, 100, 199, 0.4);
+            background: linear-gradient(135deg, #2873e2, #1a5bb3);
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .timer-container {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px 25px;
+            z-index: 100;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .timer-label {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .timer-warning {
+            color: #f59e0b !important;
+            animation: pulseWarning 1s ease-in-out infinite;
+        }
+
+        .timer-danger {
+            color: #ef4444 !important;
+            animation: pulseDanger 0.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseWarning {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes pulseDanger {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .stars-container {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            padding: 180px 60px 100px;
+            place-items: center;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .star-item {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: gentleFloat 12s ease-in-out infinite;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .star-item:nth-child(odd) {
+            animation-delay: -2s;
+        }
+
+        .star-item:nth-child(even) {
+            animation-delay: -6s;
+        }
+
+        .star-item:nth-child(3n) {
+            animation-delay: -4s;
+        }
+
+        .star-item:nth-child(4n) {
+            animation-delay: -8s;
+        }
+
+        .star-item:nth-child(5n) {
+            animation-delay: -10s;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg); 
+            }
+            33% { 
+                transform: translateY(-15px) rotate(2deg); 
+            }
+            66% { 
+                transform: translateY(-8px) rotate(-1deg); 
+            }
+        }
+
+        .star-icon {
+            font-size: 4rem;
+            color: #fbbf24;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4));
+            z-index: 2;
+        }
+
+        .star-item:hover {
+            transform: translateY(-20px) scale(1.1);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2));
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.2),
+                0 0 80px rgba(251, 191, 36, 0.3);
+        }
+
+        .star-item:hover .star-icon {
+            transform: rotate(180deg) scale(1.2);
+            color: #f59e0b;
+            filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.6));
+        }
+
+        .selected {
+            animation: elegantDisappear 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        @keyframes elegantDisappear {
+            0% { 
+                transform: translateY(-20px) scale(1.1);
+                opacity: 1;
+                background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2));
+            }
+            30% { 
+                transform: translateY(-40px) scale(1.4) rotate(180deg);
+                opacity: 1;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(168, 85, 247, 0.3));
+            }
+            70% { 
+                transform: translateY(-60px) scale(1.8) rotate(540deg);
+                opacity: 0.7;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(168, 85, 247, 0.4));
+            }
+            100% { 
+                transform: translateY(-80px) scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .selected .star-icon {
+            color: #ef4444 !important;
+            filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.8)) !important;
+        }
+
+        .shuffle-animation {
+            animation: smoothShuffle 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        @keyframes smoothShuffle {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(10deg) scale(0.95); }
+            50% { transform: translateY(-20px) rotate(-5deg) scale(1.05); }
+            75% { transform: translateY(-40px) rotate(8deg) scale(0.98); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 50px 20px 30px;
+            background: none;
+            backdrop-filter: none;
+            border-bottom: none;
+            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .header.hide-on-scroll {
+            transform: translateY(-120%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .header h1 .star-accent {
+            color: #fbbf24;
+            margin: 0 15px;
+            font-size: 3rem;
+            filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .reset-btn {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fbbf24;
+            border-radius: 50%;
+            animation: particleRise 25s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .counter {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-star {
+            color: #fbbf24;
+            margin-right: 8px;
+            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));
+        }
+
+        .counter-number {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* Efecto de brillo sutil */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.1));
+            animation: pulseGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .time-up-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 127, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+
+        .time-up-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .time-up-content {
+            text-align: center;
+            color: white;
+            animation: timeUpBounce 0.6s ease-out;
+        }
+
+        @keyframes timeUpBounce {
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .time-up-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: clockShake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes clockShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .time-up-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .time-up-message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .time-up-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-up-btn:hover {
+            background: white;
+            color: #ef4444;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .header p {
+                font-size: 1.1rem;
+            }
+            .star-item {
+                width: 120px;
+                height: 120px;
+            }
+            .star-icon {
+                font-size: 3rem;
+            }
+            .stars-container {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 40px;
+                padding: 160px 30px 80px;
+            }
+            .reset-btn {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                top: 30px;
+                right: 30px;
+            }
+            .counter {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+                bottom: 30px;
+            }
+            .timer-container {
+                top: 30px;
+                left: 30px;
+                padding: 15px 20px;
+            }
+            .timer-display {
+                font-size: 1.5rem;
+            }
+            .start-title {
+                font-size: 2rem;
+            }
+            .time-up-title {
+                font-size: 2rem;
+            }
+            .time-up-icon {
+                font-size: 4rem;
+            }
+        }
+
+        .ibridge-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 20px rgba(34, 100, 199, 0.3),
+                0 0 40px rgba(34, 100, 199, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards 0.3s;
+            background: linear-gradient(135deg, #2264c7, #0f4c9c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .ibridge-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #2264c7, transparent);
+            opacity: 0.7;
+        }
+
+        .program-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: #4d8bef;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(77, 139, 239, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards 0.5s;
+        }
+
+        @keyframes scaleIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de inicio -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-content">
+            <div class="logo-container">
+                <img src="1.png" alt="Universidad Libre Logo" class="unilibre-logo animate-logo">
+            </div>
+            <div class="ibridge-title animate-text">iBRIDGE</div>
+            <div class="program-title animate-text">INNOVATION LAB</div>
+            <div class="start-logo animate-star">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <h1 class="start-title animate-text">¡COMIENZA LA AVENTURA!</h1>
+            <p class="start-subtitle animate-text">Tienes 60 segundos para seleccionar todas las empresas que puedas. ¡Cada estrella cuenta!</p>
+            <button class="start-btn animate-btn" onclick="startGame()">
+                <i class="fas fa-play me-2"></i>JUGAR AHORA
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay de tiempo agotado -->
+    <div class="time-up-overlay" id="timeUpOverlay">
+        <div class="time-up-content">
+            <i class="fas fa-clock time-up-icon"></i>
+            <h2 class="time-up-title">¡TIEMPO AGOTADO!</h2>
+            <p class="time-up-message">Has completado el desafío</p>
+            <button class="time-up-btn" onclick="restartGame()">
+                <i class="fas fa-redo me-2"></i>JUGAR DE NUEVO
+            </button>
+        </div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
+    <!-- Temporizador -->
+    <div class="timer-container" id="timerContainer" style="display: none;">
+        <div class="timer-label">TIEMPO RESTANTE</div>
+        <div class="timer-display" id="timerDisplay">01:00</div>
+    </div>
+    
+    <div class="header">
+        <h1>
+            <i class="fas fa-star star-accent"></i>
+            STELLAR SELECTOR
+            <i class="fas fa-star star-accent"></i>
+        </h1>
+        <p>Selecciona una estrella para revelar tu destino empresarial</p>
+    </div>
+
+    <button class="btn reset-btn" onclick="resetSelection()" style="display: none;" id="resetBtn">
+        <i class="fas fa-sync-alt me-2"></i>REINICIAR
+    </button>
+
+    <div class="counter" id="counter" style="display: none;">
+        <i class="fas fa-star counter-star"></i>
+        Estrellas disponibles:<span class="counter-number" id="starCount">11</span>
+    </div>
+
+    <div class="stars-container" id="starsContainer">
+        <!-- Las estrellas se generarán dinámicamente con JavaScript -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables del juego
+        let gameTimer = null;
+        let timeLeft = 60; // 60 segundos
+        let gameStarted = false;
+        let gameEnded = false;
+        let selectedCompanies = [];
+
+        // Ocultar header al hacer scroll hacia abajo
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        const header = document.querySelector('.header');
+        function onScroll() {
+            if (!header || !gameStarted) return;
+            if (window.scrollY > 40) {
+                header.classList.add('hide-on-scroll');
+            } else {
+                header.classList.remove('hide-on-scroll');
+            }
+        }
+        window.addEventListener('scroll', onScroll);
+
+        // Array de empresas
+        const empresas = [
+            'Spotify',
+            'Netflix',
+            'Ecopetrol',
+            'Salud Total E.P.S',
+            'Rappi',
+            'Air-e',
+            'Bancolombia',
+            'Avianca',
+            'Grupo Éxito',
+            'ISA Intercolombia',
+            'Claro Colombia'
+        ];
+
+        let availableStars = 11;
+
+        // Función para iniciar el juego
+        function startGame() {
+            if (!gameStarted) {
+                const startScreen = document.getElementById('startScreen');
+                startScreen.classList.add('hidden');
+                
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                    document.getElementById('timerContainer').style.display = 'block';
+                    document.getElementById('resetBtn').style.display = 'block';
+                    document.getElementById('counter').style.display = 'block';
+                    
+                    gameStarted = true;
+                    gameEnded = false;
+                    selectedCompanies = [];
+                    startTimer();
+                    createStars();
+                }, 800);
+            }
+        }
+        // Función para iniciar el temporizador
+        function startTimer() {
+            timeLeft = 60;
+            updateTimerDisplay();
+            
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // Función para actualizar la visualización del temporizador
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const timerElement = document.getElementById('timerDisplay');
+            timerElement.textContent = display;
+            // Cambiar color según el tiempo restante
+            timerElement.classList.remove('timer-warning', 'timer-danger');
+            if (timeLeft <= 10) {
+                timerElement.classList.add('timer-danger');
+            } else if (timeLeft <= 30) {
+                timerElement.classList.add('timer-warning');
+            }
+        }
+
+        // Función para terminar el juego
+        function endGame() {
+            if (gameEnded) return;
+            
+            gameEnded = true;
+            clearInterval(gameTimer);
+            
+            // Mostrar overlay de tiempo agotado
+            const overlay = document.getElementById('timeUpOverlay');
+            overlay.classList.add('show');
+            
+            // Deshabilitar todas las estrellas
+            const stars = document.querySelectorAll('.star-item:not(.selected)');
+            stars.forEach(star => {
+                star.style.pointerEvents = 'none';
+                star.style.opacity = '0.5';
+            });
+
+            // Mostrar resultados
+            showFinalResults();
+        }
+
+        // Función para mostrar resultados finales
+        function showFinalResults() {
+            setTimeout(() => {
+                const overlay = document.getElementById('timeUpOverlay');
+                const content = overlay.querySelector('.time-up-content');
+                
+                content.innerHTML = `
+                    <i class="fas fa-trophy time-up-icon" style="color: #fbbf24;"></i>
+                    <h2 class="time-up-title">¡JUEGO COMPLETADO!</h2>
+                    <p class="time-up-message">Empresas seleccionadas: ${selectedCompanies.length}</p>
+                    <div style="margin: 20px 0; font-family: 'JetBrains Mono', monospace;">
+                        ${selectedCompanies.map(company => `
+                            <div style=\"margin: 5px 0; opacity: 0.8;\">✨ ${company}</div>
+                        `).join('')}
+                    </div>
+                    <button class="time-up-btn" onclick="restartGame()">
+                        <i class="fas fa-redo me-2"></i>JUGAR DE NUEVO
+                    </button>
+                `;
+            }, 2000);
+        }
+
+        // Función para reiniciar el juego
+        function restartGame() {
+            // Ocultar overlay
+            document.getElementById('timeUpOverlay').classList.remove('show');
+            
+            // Mostrar pantalla de inicio
+            const startScreen = document.getElementById('startScreen');
+            startScreen.style.display = 'flex';
+            startScreen.classList.remove('hidden');
+            
+            // Ocultar elementos del juego
+            document.getElementById('timerContainer').style.display = 'none';
+            document.getElementById('resetBtn').style.display = 'none';
+            document.getElementById('counter').style.display = 'none';
+            
+            // Reset variables
+            gameStarted = false;
+            gameEnded = false;
+            selectedCompanies = [];
+            timeLeft = 60;
+            
+            // Limpiar temporizador
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                gameTimer = null;
+            }
+            
+            // Limpiar contenedor de estrellas
+            document.getElementById('starsContainer').innerHTML = '';
+        }
+
+        // Crear partículas minimalistas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 25 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Crear estrellas con diseño profesional
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            container.innerHTML = '';
+            
+            // Crear array mezclado de empresas
+            const shuffledEmpresas = [...empresas].sort(() => Math.random() - 0.5);
+            
+            shuffledEmpresas.forEach((empresa, index) => {
+                const starItem = document.createElement('div');
+                starItem.className = 'star-item glow-effect';
+                starItem.setAttribute('data-index', index);
+                starItem.setAttribute('data-empresa', empresa);
+                starItem.onclick = () => selectStar(starItem, empresa);
+                
+                starItem.innerHTML = '<i class="fas fa-star star-icon"></i>';
+                
+                // Añadir delay aleatorio para la animación
+                starItem.style.animationDelay = -(Math.random() * 12) + 's';
+                
+                container.appendChild(starItem);
+            });
+            
+            availableStars = shuffledEmpresas.length;
+            updateCounter();
+        }
+
+        // Función para seleccionar una estrella
+        function selectStar(starElement, empresa) {
+            if (starElement.classList.contains('selected') || gameEnded) {
+                return;
+            }
+
+            // Agregar empresa a la lista de seleccionadas
+            selectedCompanies.push(empresa);
+
+            // Marcar como seleccionada
+            starElement.classList.add('selected');
+            
+            // Mostrar mensaje de selección
+            showSelectionMessage(empresa);
+            
+            // Revolver las estrellas restantes después de un delay
+            setTimeout(() => {
+                shuffleRemainingStars();
+                setTimeout(() => {
+                    starElement.remove();
+                    availableStars--;
+                    updateCounter();
+                    
+                    // Verificar si se seleccionaron todas las estrellas
+                    if (availableStars === 0) {
+                        setTimeout(() => {
+                            endGame();
+                        }, 1000);
+                    }
+                }, 500);
+            }, 1200);
+        }
+
+        // Revolver las estrellas restantes
+        function shuffleRemainingStars() {
+            const remainingStars = document.querySelectorAll('.star-item:not(.selected)');
+            
+            remainingStars.forEach((star, index) => {
+                setTimeout(() => {
+                    star.classList.add('shuffle-animation');
+                    
+                    // Quitar la animación después de que termine
+                    setTimeout(() => {
+                        star.classList.remove('shuffle-animation');
+                    }, 1200);
+                }, index * 80);
+            });
+        }
+
+        // Actualizar contador
+        function updateCounter() {
+            document.getElementById('starCount').textContent = availableStars;
+        }
+
+        // Mostrar mensaje de empresa seleccionada
+        function showSelectionMessage(empresa) {
+            const modalHTML = `
+                <div class="modal fade" id="selectionModal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content" style="
+                            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); 
+                            border: 2px solid rgba(251, 191, 36, 0.3); 
+                            color: white; 
+                            border-radius: 20px;
+                            backdrop-filter: blur(20px);
+                            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+                        ">
+                            <div class="modal-header border-0 justify-content-center py-4">
+                                <h5 class="modal-title text-center" style="
+                                    font-family: 'JetBrains Mono', monospace; 
+                                    font-size: 1.6rem; 
+                                    color: #fbbf24;
+                                    font-weight: 600;
+                                ">
+                                    <i class="fas fa-star me-3" style="color: #fbbf24;"></i>
+                                    EMPRESA REVELADA
+                                    <i class="fas fa-star ms-3" style="color: #fbbf24;"></i>
+                                </h5>
+                            </div>
+                            <div class="modal-body text-center py-4">
+                                <div class="mb-4">
+                                    <i class="fas fa-building fa-4x mb-3" style="
+                                        color: #3b82f6; 
+                                        filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+                                    "></i>
+                                </div>
+                                <h3 style="
+                                    font-family: 'Inter', sans-serif; 
+                                    color: #f8fafc; 
+                                    margin-bottom: 20px;
+                                    font-weight: 600;
+                                ">${empresa}</h3>
+                                <p class="mb-3" style="
+                                    font-size: 1.1rem; 
+                                    color: #cbd5e1;
+                                    font-family: 'Inter', sans-serif;
+                                ">¡Empresa seleccionada exitosamente!</p>
+                                <div style="
+                                    font-family: 'JetBrains Mono', monospace;
+                                    color: #fbbf24;
+                                    font-size: 0.9rem;
+                                ">
+                                    Empresas seleccionadas: ${selectedCompanies.length}/${empresas.length}
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 justify-content-center py-4">
+                                <button type="button" class="btn" data-bs-dismiss="modal" style="
+                                    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+                                    border: none;
+                                    color: white;
+                                    border-radius: 12px; 
+                                    padding: 12px 30px; 
+                                    font-family: 'JetBrains Mono', monospace;
+                                    font-weight: 500;
+                                    transition: all 0.3s ease;
+                                ">
+                                    <i class="fas fa-check me-2"></i>¡CONTINUAR!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingModal = document.getElementById('selectionModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            const modal = new bootstrap.Modal(document.getElementById('selectionModal'));
+            modal.show();
+            
+            // Auto-cerrar el modal después de 2 segundos para mantener el ritmo del juego
+            setTimeout(() => {
+                modal.hide();
+            }, 2000);
+        }
+
+        // Función para reiniciar la selección durante el juego
+        function resetSelection() {
+            if (!gameStarted || gameEnded) return;
+            
+            const container = document.getElementById('starsContainer');
+            
+            // Efecto de transición suave
+            container.style.opacity = '0';
+            container.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                // Reiniciar empresas seleccionadas
+                selectedCompanies = [];
+                createStars();
+                
+                // Efecto de aparición suave
+                container.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                container.style.opacity = '1';
+                container.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // Efecto de paralaje sutil
+            document.addEventListener('mousemove', function(e) {
+                if (!gameStarted) return;
+                
+                const stars = document.querySelectorAll('.star-item:not(.selected)');
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                
+                stars.forEach((star, index) => {
+                    const speed = (index % 3 + 1) * 0.2;
+                    const xMove = x * speed * 8;
+                    const yMove = y * speed * 8;
+                    star.style.transform += ` translate(${xMove}px, ${yMove}px)`;
+                });
+            });
+            
+            // Inicializar visibilidad del header
+            onScroll();
+            
+            // Efectos de sonido opcional (comentado para no interferir)
+            // Se puede descomentar si se quieren agregar efectos de sonido
+            /*
+            window.playSelectSound = function() {
+                // Aquí se puede agregar un efecto de sonido
+                console.log('¡Estrella seleccionada!');
+            };
+            
+            window.playTimeWarning = function() {
+                // Sonido de advertencia de tiempo
+                console.log('¡Tiempo limitado!');
+            };
+            */
+        });
+
+        // Atajos de teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && gameStarted) {
+                // Pausar/reanudar el juego (opcional)
+                if (gameTimer) {
+                    clearInterval(gameTimer);
+                    gameTimer = null;
+                } else if (!gameEnded) {
+                    startTimer();
+                }
+            }
+            
+            if (e.key === 'r' || e.key === 'R') {
+                if (gameStarted && !gameEnded) {
+                    resetSelection();
+                }
+            }
+        });
+
+        // Prevenir que el usuario haga trampa cambiando la hora del sistema
+        let lastTime = Date.now();
+        setInterval(() => {
+            const currentTime = Date.now();
+            const timeDiff = currentTime - lastTime;
+            
+            // Si la diferencia de tiempo es muy grande, podría ser trampa
+            if (timeDiff > 2000 && gameStarted && !gameEnded) {
+                console.warn('Posible manipulación de tiempo detectada');
+                // Aquí se podría implementar una medida de seguridad
+            }
+            
+            lastTime = currentTime;
+        }, 1000);
+    </script>
+</body>
+</html>
