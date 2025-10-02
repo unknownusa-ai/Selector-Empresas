@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selector de Empresas</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Pantalla de inicio -->
     <div class="start-screen" id="startScreen">
@@ -22,7 +26,8 @@
                 <i class="fas fa-microchip"></i>
             </div>
             <h1 class="start-title animate-text">¡COMIENZA LA AVENTURA!</h1>
-            <p class="start-subtitle animate-text">Selecciona todas las empresas que desees. ¡Cada estrella revela una historia!</p>
+            <p class="start-subtitle animate-text">Selecciona todas las empresas que desees. ¡Cada estrella revela una
+                historia!</p>
             <button class="start-btn animate-btn" onclick="startGame()">
                 <i class="fas fa-play me-2"></i>JUGAR AHORA
             </button>
@@ -44,7 +49,7 @@
     <div class="particles" id="particles"></div>
 
 
-    
+
     <div class="header">
         <h1>
             <i class="fas fa-star star-accent"></i>
@@ -94,12 +99,12 @@
 
         // Array de empresas
         const empresas = [
-        'Netflix',
-        'Bancolombia',
-        'Avianca',
-        'Grupo Éxito',
-        'Claro Colombia'
-        ]; 
+            'Netflix',
+            'Bancolombia',
+            'Avianca',
+            'Grupo Éxito',
+            'Claro Colombia'
+        ];
 
 
         let availableStars = 5;
@@ -109,13 +114,13 @@
             if (!gameStarted) {
                 const startScreen = document.getElementById('startScreen');
                 startScreen.classList.add('hidden');
-                
+
                 setTimeout(() => {
                     startScreen.style.display = 'none';
                     document.getElementById('resetBtn').classList.remove('hidden');
                     document.getElementById('finishBtn').classList.remove('hidden');
                     document.getElementById('counter').classList.remove('hidden');
-                    
+
                     gameStarted = true;
                     gameEnded = false;
                     selectedCompanies = [];
@@ -128,13 +133,13 @@
         // Función para terminar el juego
         function endGame() {
             if (gameEnded) return;
-            
+
             gameEnded = true;
-            
+
             // Mostrar overlay de resultados
             const overlay = document.getElementById('resultsOverlay');
             overlay.classList.add('show');
-            
+
             // Deshabilitar todas las estrellas
             const stars = document.querySelectorAll('.star-item:not(.selected)');
             stars.forEach(star => {
@@ -151,7 +156,7 @@
             setTimeout(() => {
                 const overlay = document.getElementById('resultsOverlay');
                 const content = overlay.querySelector('.results-content');
-                
+
                 let companiesHTML = '';
                 if (selectedCompanies.length > 0) {
                     companiesHTML = selectedCompanies.map(company => {
@@ -181,13 +186,13 @@
                 } else {
                     companiesHTML = '<p class="no-companies">No seleccionaste ninguna empresa. ¡Inténtalo de nuevo!</p>';
                 }
-                
+
                 // Mostrar información de debug en consola
                 console.log('Empresas seleccionadas:', selectedCompanies);
                 console.log('Total empresas:', selectedCompanies.length);
-                
+
                 content.innerHTML = `
-                    <i class="fas fa-trophy results-icon" style="color: #fbbf24;"></i>
+                    <i class="fas fa-trophy results-icon"></i>
                     <h2 class="results-title">¡EXPLORACIÓN COMPLETADA!</h2>
                     <p class="results-message">Empresas descubiertas: ${selectedCompanies.length} de ${empresas.length}</p>
                     <div class="companies-results">
@@ -204,22 +209,22 @@
         function restartGame() {
             // Ocultar overlay
             document.getElementById('resultsOverlay').classList.remove('show');
-            
+
             // Mostrar pantalla de inicio
             const startScreen = document.getElementById('startScreen');
             startScreen.style.display = 'flex';
             startScreen.classList.remove('hidden');
-            
+
             // Ocultar elementos del juego
             document.getElementById('resetBtn').classList.add('hidden');
             document.getElementById('finishBtn').classList.add('hidden');
             document.getElementById('counter').classList.add('hidden');
-            
+
             // Reset variables
             gameStarted = false;
             gameEnded = false;
             selectedCompanies = [];
-            
+
             // Limpiar contenedor de estrellas
             document.getElementById('starsContainer').innerHTML = '';
         }
@@ -227,7 +232,7 @@
         // Crear partículas minimalistas
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            
+
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -242,25 +247,25 @@
         function createStars() {
             const container = document.getElementById('starsContainer');
             container.innerHTML = '';
-            
+
             // Crear array mezclado de empresas
             const shuffledEmpresas = [...empresas].sort(() => Math.random() - 0.5);
-            
+
             shuffledEmpresas.forEach((empresa, index) => {
                 const starItem = document.createElement('div');
                 starItem.className = 'star-item glow-effect';
                 starItem.setAttribute('data-index', index);
                 starItem.setAttribute('data-empresa', empresa);
                 starItem.onclick = () => selectStar(starItem, empresa);
-                
+
                 starItem.innerHTML = '<i class="fas fa-star star-icon"></i>';
-                
+
                 // Añadir delay aleatorio para la animación
                 starItem.style.animationDelay = -(Math.random() * 12) + 's';
-                
+
                 container.appendChild(starItem);
             });
-            
+
             availableStars = shuffledEmpresas.length;
             updateCounter();
         }
@@ -276,7 +281,7 @@
 
             // Marcar como seleccionada
             starElement.classList.add('selected');
-            
+
             // Mostrar mensaje de selección y manejar la eliminación después
             showSelectionMessage(empresa, starElement);
         }
@@ -284,11 +289,11 @@
         // Revolver las estrellas restantes
         function shuffleRemainingStars() {
             const remainingStars = document.querySelectorAll('.star-item:not(.selected)');
-            
+
             remainingStars.forEach((star, index) => {
                 setTimeout(() => {
                     star.classList.add('shuffle-animation');
-                    
+
                     // Quitar la animación después de que termine
                     setTimeout(() => {
                         star.classList.remove('shuffle-animation');
@@ -307,63 +312,26 @@
             const modalHTML = `
                 <div class="modal fade" id="selectionModal" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content" style="
-                            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); 
-                            border: 2px solid rgba(251, 191, 36, 0.3); 
-                            color: white; 
-                            border-radius: 20px;
-                            backdrop-filter: blur(20px);
-                            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-                        ">
-                            <div class="modal-header border-0 justify-content-center py-4">
-                                <h5 class="modal-title text-center" style="
-                                    font-family: 'JetBrains Mono', monospace; 
-                                    font-size: 1.6rem; 
-                                    color: #fbbf24;
-                                    font-weight: 600;
-                                ">
-                                    <i class="fas fa-star me-3" style="color: #fbbf24;"></i>
+                        <div class="modal-content selection-modal-content">
+                            <div class="modal-header selection-modal-header">
+                                <h5 class="modal-title text-center selection-modal-title">
+                                    <i class="fas fa-star me-3 selection-modal-star"></i>
                                     EMPRESA REVELADA
-                                    <i class="fas fa-star ms-3" style="color: #fbbf24;"></i>
+                                    <i class="fas fa-star ms-3 selection-modal-star"></i>
                                 </h5>
                             </div>
-                            <div class="modal-body text-center py-4">
+                            <div class="modal-body text-center selection-modal-body">
                                 <div class="mb-4">
-                                    <i class="fas fa-building fa-4x mb-3" style="
-                                        color: #3b82f6; 
-                                        filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
-                                    "></i>
+                                    <i class="fas fa-building fa-4x mb-3 selection-modal-icon"></i>
                                 </div>
-                                <h3 style="
-                                    font-family: 'Inter', sans-serif; 
-                                    color: #f8fafc; 
-                                    margin-bottom: 20px;
-                                    font-weight: 600;
-                                ">${empresa}</h3>
-                                <p class="mb-3" style="
-                                    font-size: 1.1rem; 
-                                    color: #cbd5e1;
-                                    font-family: 'Inter', sans-serif;
-                                ">¡Empresa seleccionada exitosamente!</p>
-                                <div style="
-                                    font-family: 'JetBrains Mono', monospace;
-                                    color: #fbbf24;
-                                    font-size: 0.9rem;
-                                ">
+                                <h3 class="selection-modal-company-name">${empresa}</h3>
+                                <p class="mb-3 selection-modal-message">¡Empresa seleccionada exitosamente!</p>
+                                <div class="selection-modal-counter">
                                     Empresas seleccionadas: ${selectedCompanies.length}/${empresas.length}
                                 </div>
                             </div>
-                            <div class="modal-footer border-0 justify-content-center py-4">
-                                <button type="button" class="btn" data-bs-dismiss="modal" style="
-                                    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-                                    border: none;
-                                    color: white;
-                                    border-radius: 12px; 
-                                    padding: 12px 30px; 
-                                    font-family: 'JetBrains Mono', monospace;
-                                    font-weight: 500;
-                                    transition: all 0.3s ease;
-                                ">
+                            <div class="modal-footer selection-modal-footer">
+                                <button type="button" class="btn selection-modal-btn" data-bs-dismiss="modal">
                                     <i class="fas fa-check me-2"></i>¡CONTINUAR!
                                 </button>
                             </div>
@@ -371,16 +339,16 @@
                     </div>
                 </div>
             `;
-            
+
             const existingModal = document.getElementById('selectionModal');
             if (existingModal) {
                 existingModal.remove();
             }
-            
+
             document.body.insertAdjacentHTML('beforeend', modalHTML);
             const modal = new bootstrap.Modal(document.getElementById('selectionModal'));
             modal.show();
-            
+
             // Auto-cerrar el modal después de 2 segundos para mantener el ritmo del juego
             setTimeout(() => {
                 modal.hide();
@@ -390,18 +358,18 @@
         // Función para reiniciar la selección durante el juego
         function resetSelection() {
             if (!gameStarted || gameEnded) return;
-            
+
             const container = document.getElementById('starsContainer');
-            
+
             // Efecto de transición suave
             container.style.opacity = '0';
             container.style.transform = 'scale(0.95)';
-            
+
             setTimeout(() => {
                 // Reiniciar empresas seleccionadas
                 selectedCompanies = [];
                 createStars();
-                
+
                 // Efecto de aparición suave
                 container.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
                 container.style.opacity = '1';
@@ -410,17 +378,17 @@
         }
 
         // Inicializar cuando se carga la página
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             createParticles();
-            
+
             // Efecto de paralaje sutil
-            document.addEventListener('mousemove', function(e) {
+            document.addEventListener('mousemove', function (e) {
                 if (!gameStarted) return;
-                
+
                 const stars = document.querySelectorAll('.star-item:not(.selected)');
                 const x = (e.clientX / window.innerWidth - 0.5) * 2;
                 const y = (e.clientY / window.innerHeight - 0.5) * 2;
-                
+
                 stars.forEach((star, index) => {
                     const speed = (index % 3 + 1) * 0.2;
                     const xMove = x * speed * 8;
@@ -428,10 +396,10 @@
                     star.style.transform += ` translate(${xMove}px, ${yMove}px)`;
                 });
             });
-            
+
             // Inicializar visibilidad del header
             onScroll();
-            
+
             // Efectos de sonido opcional (comentado para no interferir)
             // Se puede descomentar si se quieren agregar efectos de sonido
             /*
@@ -447,14 +415,14 @@
             */
         });
 
-            // Atajos de teclado
-        document.addEventListener('keydown', function(e) {
+        // Atajos de teclado
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'r' || e.key === 'R') {
                 if (gameStarted && !gameEnded) {
                     resetSelection();
                 }
             }
-            
+
             if (e.key === 'Escape' && gameStarted) {
                 // Mostrar resumen actual
                 if (selectedCompanies.length > 0) {
@@ -464,61 +432,61 @@
         });        // Función para mostrar progreso actual (opcional)
         function showCurrentProgress() {
             if (selectedCompanies.length === 0) return;
-            
+
             console.log('Progreso actual:', selectedCompanies);
             // Aquí se podría mostrar un modal con el progreso actual si se desea
         }
     </script>
-<script>
-// Información detallada de las empresas
-const empresasInfo = {
-    "Netflix": {
-        descripcion: "Netflix es la plataforma de streaming líder a nivel mundial, revolucionando el entretenimiento digital desde 1997. Con más de 230 millones de suscriptores en más de 190 países, Netflix ha transformado la manera en que consumimos contenido audiovisual. La empresa cuenta con una infraestructura tecnológica avanzada que procesa petabytes de datos diariamente, utilizando algoritmos de machine learning para personalizar la experiencia de cada usuario.",
-        sector: "Tecnología y Entretenimiento",
-        fundacion: "1997",
-        empleados: "12,800+ empleados globalmente",
-        problematica: "Netflix enfrenta desafíos complejos en la era de la personalización masiva: debe adaptar sus algoritmos de recomendación a patrones culturales diversos, combatir la piratería, competir con gigantes como Disney+ y Amazon Prime, mientras mantiene la calidad de streaming en tiempo real para millones de usuarios simultáneos. Además, debe equilibrar la inversión en contenido original con la rentabilidad, y navegar las regulaciones de diferentes países.",
-        innovacion: "Pioneros en el uso de CDN (Content Delivery Networks), algoritmos de recomendación avanzados, y producción de contenido original basada en datos de audiencia."
-    },
-    "Bancolombia": {
-        descripcion: "Bancolombia es la entidad financiera más grande e influyente de Colombia, fundada en 1945. Con más de 77 años de historia, atiende a más de 18 millones de clientes a través de una red de más de 1,000 oficinas y 5,000 ATMs. Es líder en banca digital en Latinoamérica, procesando más de 2 mil millones de transacciones anuales. La entidad maneja activos por más de $200 billones de pesos y es reconocida por su innovación en servicios financieros.",
-        sector: "Servicios Financieros",
-        fundacion: "1945",
-        empleados: "40,000+ empleados",
-        problematica: "Bancolombia debe navegar la transformación digital acelerada, integrando canales físicos y digitales para ofrecer una experiencia omnicanal perfecta. Sus retos incluyen: detectar y prevenir fraudes en tiempo real usando IA, cumplir con regulaciones financieras cada vez más estrictas, competir con fintechs ágiles, proteger datos sensibles de ciberataques, y democratizar el acceso financiero en zonas rurales mediante tecnología móvil.",
-        innovacion: "Líder en Open Banking, implementación de blockchain para remesas, chatbots con IA para atención al cliente, y plataformas de pagos digitales."
-    },
-    "Avianca": {
-        descripcion: "Avianca es la aerolínea bandera de Colombia y una de las más antiguas del mundo, fundada en 1919. Con más de 100 años de operación, conecta a Colombia con el mundo a través de una red que abarca más de 100 destinos en 25 países. La aerolínea transporta más de 30 millones de pasajeros anualmente y cuenta con una flota moderna de más de 130 aeronaves. Es miembro de Star Alliance, la alianza de aerolíneas más grande del mundo.",
-        sector: "Transporte Aéreo",
-        fundacion: "1919",
-        empleados: "20,000+ empleados",
-        problematica: "Avianca enfrenta desafíos únicos en la aviación post-pandemia: debe optimizar rutas y precios dinámicamente usando big data, garantizar la máxima seguridad operacional, reducir su huella de carbono con combustibles sostenibles, personalizar la experiencia del pasajero, gestionar la volatilidad del precio del combustible, y adaptarse a regulaciones internacionales cambiantes. La puntualidad, satisfacción del cliente y eficiencia operacional son críticas.",
-        innovacion: "Uso de analytics predictivos para mantenimiento de aeronaves, apps móviles para check-in facial, y programas de fidelización basados en IA."
-    },
-    "Grupo Éxito": {
-        descripcion: "Grupo Éxito es el gigante del retail colombiano, líder indiscutible con más de 75 años transformando el comercio en el país. Opera más de 2,500 puntos de venta bajo marcas como Éxito, Carulla, Surtimax y Surtimayorista, además de su plataforma e-commerce. Atiende a más de 40 millones de clientes anualmente, empleando directamente a más de 100,000 personas. Su facturación anual supera los $15 billones de pesos, siendo un actor clave en la economía nacional.",
-        sector: "Retail y E-commerce",
-        fundacion: "1949",
-        empleados: "100,000+ empleados",
-        problematica: "Grupo Éxito debe reinventarse en la era omnicanal: integrar perfectamente experiencias físicas y digitales, competir con gigantes como Amazon, optimizar la cadena de suministro con IA para reducir desperdicios, personalizar ofertas para millones de clientes, implementar sistemas de pago innovadores, y sostener operaciones de última milla eficientes. La gestión de inventarios en tiempo real y la experiencia del cliente son fundamentales.",
-        innovacion: "Pioneros en dark stores, uso de robots para inventarios, personalización con machine learning, y sistemas de pago sin contacto."
-    },
-    "Claro Colombia": {
-        descripcion: "Claro Colombia es la empresa de telecomunicaciones líder del país, parte del imperio América Móvil de Carlos Slim. Con más de 30 millones de líneas móviles y 3 millones de líneas fijas, Claro domina el mercado colombiano de las telecomunicaciones. Ofrece servicios integrales de telefonía móvil, internet fijo, televisión por cable, y soluciones empresariales. Su red 4G cubre más del 90% del territorio nacional y está desplegando activamente 5G en las principales ciudades.",
-        sector: "Telecomunicaciones",
-        fundacion: "2003 (en Colombia)",
-        empleados: "15,000+ empleados",
-        problematica: "Claro debe liderar la transformación digital nacional: desplegar redes 5G masivamente, anticipar y resolver congestiones de red usando IA, personalizar planes y servicios para 30+ millones de usuarios, proteger la infraestructura crítica de ciberataques sofisticados, competir con operadores virtuales ágiles, y democratizar el acceso a internet en zonas rurales. La calidad de servicio y la innovación constante son vitales para mantener el liderazgo.",
-        innovacion: "Despliegue de 5G, edge computing, IoT para ciudades inteligentes, y plataformas de autoservicio impulsadas por IA."
-    }
-};
+    <script>
+        // Información detallada de las empresas
+        const empresasInfo = {
+            "Netflix": {
+                descripcion: "Netflix es la plataforma de streaming líder a nivel mundial, revolucionando el entretenimiento digital desde 1997. Con más de 230 millones de suscriptores en más de 190 países, Netflix ha transformado la manera en que consumimos contenido audiovisual. La empresa cuenta con una infraestructura tecnológica avanzada que procesa petabytes de datos diariamente, utilizando algoritmos de machine learning para personalizar la experiencia de cada usuario.",
+                sector: "Tecnología y Entretenimiento",
+                fundacion: "1997",
+                empleados: "12,800+ empleados globalmente",
+                problematica: "Netflix enfrenta desafíos complejos en la era de la personalización masiva: debe adaptar sus algoritmos de recomendación a patrones culturales diversos, combatir la piratería, competir con gigantes como Disney+ y Amazon Prime, mientras mantiene la calidad de streaming en tiempo real para millones de usuarios simultáneos. Además, debe equilibrar la inversión en contenido original con la rentabilidad, y navegar las regulaciones de diferentes países.",
+                innovacion: "Pioneros en el uso de CDN (Content Delivery Networks), algoritmos de recomendación avanzados, y producción de contenido original basada en datos de audiencia."
+            },
+            "Bancolombia": {
+                descripcion: "Bancolombia es la entidad financiera más grande e influyente de Colombia, fundada en 1945. Con más de 77 años de historia, atiende a más de 18 millones de clientes a través de una red de más de 1,000 oficinas y 5,000 ATMs. Es líder en banca digital en Latinoamérica, procesando más de 2 mil millones de transacciones anuales. La entidad maneja activos por más de $200 billones de pesos y es reconocida por su innovación en servicios financieros.",
+                sector: "Servicios Financieros",
+                fundacion: "1945",
+                empleados: "40,000+ empleados",
+                problematica: "Bancolombia debe navegar la transformación digital acelerada, integrando canales físicos y digitales para ofrecer una experiencia omnicanal perfecta. Sus retos incluyen: detectar y prevenir fraudes en tiempo real usando IA, cumplir con regulaciones financieras cada vez más estrictas, competir con fintechs ágiles, proteger datos sensibles de ciberataques, y democratizar el acceso financiero en zonas rurales mediante tecnología móvil.",
+                innovacion: "Líder en Open Banking, implementación de blockchain para remesas, chatbots con IA para atención al cliente, y plataformas de pagos digitales."
+            },
+            "Avianca": {
+                descripcion: "Avianca es la aerolínea bandera de Colombia y una de las más antiguas del mundo, fundada en 1919. Con más de 100 años de operación, conecta a Colombia con el mundo a través de una red que abarca más de 100 destinos en 25 países. La aerolínea transporta más de 30 millones de pasajeros anualmente y cuenta con una flota moderna de más de 130 aeronaves. Es miembro de Star Alliance, la alianza de aerolíneas más grande del mundo.",
+                sector: "Transporte Aéreo",
+                fundacion: "1919",
+                empleados: "20,000+ empleados",
+                problematica: "Avianca enfrenta desafíos únicos en la aviación post-pandemia: debe optimizar rutas y precios dinámicamente usando big data, garantizar la máxima seguridad operacional, reducir su huella de carbono con combustibles sostenibles, personalizar la experiencia del pasajero, gestionar la volatilidad del precio del combustible, y adaptarse a regulaciones internacionales cambiantes. La puntualidad, satisfacción del cliente y eficiencia operacional son críticas.",
+                innovacion: "Uso de analytics predictivos para mantenimiento de aeronaves, apps móviles para check-in facial, y programas de fidelización basados en IA."
+            },
+            "Grupo Éxito": {
+                descripcion: "Grupo Éxito es el gigante del retail colombiano, líder indiscutible con más de 75 años transformando el comercio en el país. Opera más de 2,500 puntos de venta bajo marcas como Éxito, Carulla, Surtimax y Surtimayorista, además de su plataforma e-commerce. Atiende a más de 40 millones de clientes anualmente, empleando directamente a más de 100,000 personas. Su facturación anual supera los $15 billones de pesos, siendo un actor clave en la economía nacional.",
+                sector: "Retail y E-commerce",
+                fundacion: "1949",
+                empleados: "100,000+ empleados",
+                problematica: "Grupo Éxito debe reinventarse en la era omnicanal: integrar perfectamente experiencias físicas y digitales, competir con gigantes como Amazon, optimizar la cadena de suministro con IA para reducir desperdicios, personalizar ofertas para millones de clientes, implementar sistemas de pago innovadores, y sostener operaciones de última milla eficientes. La gestión de inventarios en tiempo real y la experiencia del cliente son fundamentales.",
+                innovacion: "Pioneros en dark stores, uso de robots para inventarios, personalización con machine learning, y sistemas de pago sin contacto."
+            },
+            "Claro Colombia": {
+                descripcion: "Claro Colombia es la empresa de telecomunicaciones líder del país, parte del imperio América Móvil de Carlos Slim. Con más de 30 millones de líneas móviles y 3 millones de líneas fijas, Claro domina el mercado colombiano de las telecomunicaciones. Ofrece servicios integrales de telefonía móvil, internet fijo, televisión por cable, y soluciones empresariales. Su red 4G cubre más del 90% del territorio nacional y está desplegando activamente 5G en las principales ciudades.",
+                sector: "Telecomunicaciones",
+                fundacion: "2003 (en Colombia)",
+                empleados: "15,000+ empleados",
+                problematica: "Claro debe liderar la transformación digital nacional: desplegar redes 5G masivamente, anticipar y resolver congestiones de red usando IA, personalizar planes y servicios para 30+ millones de usuarios, proteger la infraestructura crítica de ciberataques sofisticados, competir con operadores virtuales ágiles, y democratizar el acceso a internet en zonas rurales. La calidad de servicio y la innovación constante son vitales para mantener el liderazgo.",
+                innovacion: "Despliegue de 5G, edge computing, IoT para ciudades inteligentes, y plataformas de autoservicio impulsadas por IA."
+            }
+        };
 
-// Función mejorada para mostrar información de empresas
-function showSelectionMessage(empresa, starElement) {
-    const info = empresasInfo[empresa];
+        // Función mejorada para mostrar información de empresas
+        function showSelectionMessage(empresa, starElement) {
+            const info = empresasInfo[empresa];
 
-    const modalHTML = `
+            const modalHTML = `
         <div class="modal fade" id="selectionModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content company-modal">
@@ -562,45 +530,46 @@ function showSelectionMessage(empresa, starElement) {
             </div>
         </div>
     `;
-    
-    const existingModal = document.getElementById('selectionModal');
-    if (existingModal) existingModal.remove();
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    const modal = new bootstrap.Modal(document.getElementById('selectionModal'));
-    
-    // Store reference to the star element for later removal
-    window.currentStarElement = starElement;
-    
-    modal.show();
-}
 
-// Función para manejar la eliminación de estrella después de cerrar el modal
-function handleStarRemoval() {
-    const starElement = window.currentStarElement;
-    
-    if (starElement) {
-        // Revolver las estrellas restantes después de un delay
-        setTimeout(() => {
-            shuffleRemainingStars();
-            setTimeout(() => {
-                starElement.remove();
-                availableStars--;
-                updateCounter();
-                
-                // Verificar si se seleccionaron todas las estrellas
-                if (availableStars === 0) {
+            const existingModal = document.getElementById('selectionModal');
+            if (existingModal) existingModal.remove();
+
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            const modal = new bootstrap.Modal(document.getElementById('selectionModal'));
+
+            // Store reference to the star element for later removal
+            window.currentStarElement = starElement;
+
+            modal.show();
+        }
+
+        // Función para manejar la eliminación de estrella después de cerrar el modal
+        function handleStarRemoval() {
+            const starElement = window.currentStarElement;
+
+            if (starElement) {
+                // Revolver las estrellas restantes después de un delay
+                setTimeout(() => {
+                    shuffleRemainingStars();
                     setTimeout(() => {
-                        endGame();
-                    }, 1000);
-                }
-            }, 500);
-        }, 300);
-    }
-    
-    // Limpiar la referencia
-    window.currentStarElement = null;
-}
-</script>
+                        starElement.remove();
+                        availableStars--;
+                        updateCounter();
+
+                        // Verificar si se seleccionaron todas las estrellas
+                        if (availableStars === 0) {
+                            setTimeout(() => {
+                                endGame();
+                            }, 1000);
+                        }
+                    }, 500);
+                }, 300);
+            }
+
+            // Limpiar la referencia
+            window.currentStarElement = null;
+        }
+    </script>
 </body>
+
 </html>

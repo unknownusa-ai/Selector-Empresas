@@ -919,7 +919,7 @@ body::before {
 
 .results-icon {
     font-size: 4rem;
-    color: #fbbf24;
+    color: #fbbf24 !important;
     margin-bottom: 1rem;
     filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.5));
 }
@@ -1051,6 +1051,86 @@ body::before {
     transform: translateY(-2px);
     box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
     background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+/* Selection Modal Styles */
+.selection-modal-content {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    border: 2px solid rgba(251, 191, 36, 0.3);
+    color: white;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.selection-modal-header {
+    border: 0;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.selection-modal-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+.selection-modal-star {
+    color: #fbbf24;
+}
+
+.selection-modal-body {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.selection-modal-icon {
+    color: #3b82f6;
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+}
+
+.selection-modal-company-name {
+    font-family: 'Inter', sans-serif;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.selection-modal-message {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    font-family: 'Inter', sans-serif;
+}
+
+.selection-modal-counter {
+    font-family: 'JetBrains Mono', monospace;
+    color: #fbbf24;
+    font-size: 0.9rem;
+}
+
+.selection-modal-footer {
+    border: 0;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.selection-modal-btn {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    padding: 12px 30px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.selection-modal-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    color: white;
 }
 
 /* Utility classes */
